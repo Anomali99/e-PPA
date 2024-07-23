@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Data Santri - e-PPA</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/fontawesome-free/css/all.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .main-content {
+            padding-top: 20px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .wizard-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .wizard-step {
+            position: relative;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .wizard-step-icon {
+            background-color: #007bff;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .wizard-step-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .wizard-step-active .wizard-step-icon {
+            background-color: #28a745;
+        }
+        .form-group label {
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            opacity: 0.9;
+        }
+        .breadcrumb-item a {
+            color: #007bff;
+        }
+        .bg-primary {
+            background-color: #007bff !important;
+            color: #fff;
+        }
+        .text-white {
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content bg-primary">
+        <section class="section">
+            <div class="section-header">
+                <h1>EDIT DATA SANTRI</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="dashboard.html">Dashboard</a></div>
+                    <div class="breadcrumb-item text-primary"><a href="view_data_santri.html">Data Santri</a></div>
+                    <div class="breadcrumb-item text-primary">Edit Santri</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mt-4">
+                                <div class="col-12 col-lg-8 offset-lg-2">
+                                    <div class="wizard-steps">
+                                        <div class="wizard-step wizard-step-active">
+                                            <div class="wizard-step-icon">
+                                                <i class="fas fa-user-graduate"></i>
+                                            </div>
+                                            <div class="wizard-step-label">
+                                                Formulir Santri
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form class="wizard-content mt-2" method="post" action="">
+                                <div class="wizard-pane">
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">ID</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="id" class="form-control" value="123456" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">Nama</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="nama" class="form-control" value="Ahmad">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">NIS</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="nis" class="form-control" value="78910">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">Alamat</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="alamat" class="form-control" value="Jl. Merdeka">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">Wali Santri</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="wali_santri" class="form-control" value="Ali">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">Sekolah</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="sekolah" class="form-control" value="SMA 1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-md-4 text-md-right text-white">Jenis Kelamin</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <select class="form-control" name="jenis_kelamin">
+                                                <option value="Laki-laki" selected>Laki-laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-lg-4 col-md-6 text-right">
+                                            <button type="submit" class="btn btn-icon icon-right btn-primary">SIMPAN PERUBAHAN<i class="fas fa-arrow-right ml-2"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <button onclick="window.history.back();" class="btn btn-secondary btn-lg btn-block mt-4">Kembali</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/scripts.js"></script>
+</body>
+</html>

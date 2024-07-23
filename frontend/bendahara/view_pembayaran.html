@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>View Pembayaran - e-PPA</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+            max-width: 800px;
+        }
+        h2 {
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .table {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .thead-dark th {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-secondary {
+            border: none;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">View Pembayaran</h2>
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nama Santri</th>
+                    <th>Bulan</th>
+                    <th>Status Pembayaran</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Santri 1</td>
+                    <td>Januari</td>
+                    <td>Lunas</td>
+                </tr>
+                <tr>
+                    <td>Santri 2</td>
+                    <td>Februari</td>
+                    <td>Belum Lunas</td>
+                </tr>
+                <!-- Additional rows here -->
+            </tbody>
+        </table>
+        <button onclick="window.history.back();" class="btn btn-secondary btn-lg btn-block mt-4">Kembali</button>
+    </div>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/scripts.js"></script>
+</body>
+</html>

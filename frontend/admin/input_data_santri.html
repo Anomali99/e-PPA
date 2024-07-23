@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data Santri - e-PPA</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/fontawesome-free/css/all.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .wizard-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .wizard-step {
+            position: relative;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .wizard-step-icon {
+            background-color: #007bff;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .wizard-step-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .wizard-step-active .wizard-step-icon {
+            background-color: #28a745;
+        }
+        .form-group label {
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-secondary {
+            border: none;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="wizard-steps">
+                                    <div class="wizard-step wizard-step-active">
+                                        <div class="wizard-step-icon">
+                                            <i class="fas fa-user-graduate"></i>
+                                        </div>
+                                        <div class="wizard-step-label">
+                                            Formulir Santri
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="wizard-content mt-2" method="post" action="proses_tambahsantri.php">
+                            <div class="wizard-pane">
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">ID</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <input type="text" name="id" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">Nama</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <input type="text" name="nama" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">NIS</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <input type="text" name="nis" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">Alamat</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <input type="text" name="alamat" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">Wali Santri</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <input type="text" name="wali_santri" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">Sekolah</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <input type="text" name="sekolah" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-md-4 text-md-right">Jenis Kelamin</label>
+                                    <div class="col-lg-6 col-md-8">
+                                        <select class="form-control" name="jenis_kelamin" required>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group row">
+                            <div class="col-md-4"></div>
+                            <div class="col-lg-6 col-md-8 text-right">
+                                <button type="submit" class="btn btn-icon icon-right btn-primary">TAMBAH SANTRI<i class="fas fa-arrow-right ml-2"></i></button>
+                            </div>
+                        <button onclick="window.history.back();" class="btn btn-secondary btn-lg btn-block mt-4">Kembali</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/scripts.js"></script>
+</body>
+</html>

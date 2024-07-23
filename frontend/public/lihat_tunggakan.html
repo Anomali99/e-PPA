@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lihat Tunggakan - e-PPA</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/fontawesome-free/css/all.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .main-content {
+            padding-top: 20px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            opacity: 0.9;
+        }
+        .breadcrumb-item a {
+            color: #007bff;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .thead-dark th {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content bg-light">
+        <section class="section">
+            <div class="section-header">
+                <h1>LIHAT TUNGGAKAN</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="../dashboard.html">Dashboard</a></div>
+                    <div class="breadcrumb-item text-primary">Lihat Tunggakan</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>DATA TUNGGAKAN</h4>
+                            <div class="card-header-form">
+                                <form>
+                                    <div class="input-group">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Santri atau Bulan">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="tunggakanTable">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Nama Santri</th>
+                                            <th>Bulan</th>
+                                            <th>Status Pembayaran</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Santri 1</td>
+                                            <td>Januari</td>
+                                            <td>Belum Lunas</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Santri 2</td>
+                                            <td>Februari</td>
+                                            <td>Lunas</td>
+                                        </tr>
+                                        <!-- Additional rows here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <button onclick="window.history.back();" class="btn btn-secondary btn-lg btn-block mt-4">Kembali</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/scripts.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tunggakanTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</body>
+</html>
