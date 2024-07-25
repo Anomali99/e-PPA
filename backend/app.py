@@ -1,5 +1,7 @@
 from flask import Flask
+from routes.santri_bp import santri_bp
 from routes.user_bp import user_bp
+# from routes.spp_bp import spp_bp
 from argparse import ArgumentParser, Namespace
 from controllers.usersController import addUser
 
@@ -7,7 +9,11 @@ from controllers.usersController import addUser
 app  = Flask(__name__)
 
 app.config.from_object('config')
+
 app.register_blueprint(user_bp, url_prefix='/users')
+app.register_blueprint(santri_bp, url_prefix='/santri')
+# app.register_blueprint(spp_bp, url_prefix='/spp')
+
 
 parser = ArgumentParser()
 parser.add_argument('--func', '-f')

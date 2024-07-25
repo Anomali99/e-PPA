@@ -5,6 +5,7 @@ from flask import request
 from getpass import getpass
 from models import Session
 from controllers import response
+from auth import Auth
 import json
 
 
@@ -17,12 +18,14 @@ def login():
         user = session.query(Users).filter(Users.username == username).first()
         if user:
             if check_password_hash(user.password, password):
+                token = Auth.generate_token(user.username)
                 return response(
                     status_code=200,
                     message='login success',
                     data={
                         'user_uuid': user.user_uuid,
                         'username': user.username,
+                        'token': token
                     }
                 )
             else:

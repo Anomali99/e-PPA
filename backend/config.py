@@ -1,4 +1,4 @@
-import os
+import os, datetime
 from dotenv import load_dotenv
 
 load_dotenv() 
@@ -13,5 +13,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI= f"mysql+pymysql://{_user}:{_password}@{_host}:{_dbport}/{_dbname}?charset=utf8mb4"
 SQLALCHEMY_TRACK_MODIFICATIONS= False
-SECRET_KEY = os.urandom(32)
+SECRET_KEY = "qwerty"
+JWT_EXPIRATION_DELTA = datetime.timedelta(hours=1)
 DEBUG = True
