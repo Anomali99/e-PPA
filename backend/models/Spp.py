@@ -1,9 +1,8 @@
-from sqlalchemy import Column, Integer, String, DateTime, Date, Boolean, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-import uuid
+from .Santri import Base, Santri
+import uuid, datetime
 
-Base = declarative_base()
 
 class Spp(Base):
     __tablename__ = 'spp'
@@ -12,6 +11,8 @@ class Spp(Base):
     month:str = Column(String(10), nullable=False)
     year:str = Column(String(4), nullable=False)
     nominal:int = Column(Integer, nullable=False)
+    
+    spp_santris = relationship('SppSantri', back_populates='spp')
 
 
 class SppSantri(Base):
@@ -20,7 +21,10 @@ class SppSantri(Base):
     spp_santri_uuid:str = Column(String, nullable=False, default=str(uuid.uuid4()))
     santri_id:int = Column(Integer,  ForeignKey('santri.santri_id'), nullable=False)
     spp_id:int = Column(Integer,  ForeignKey('spp.spp_id'), nullable=False)
-    datetime = Column(DateTime, nullable=False)
+    datetime = Column(DateTime, nullable=False, default=datetime.datetime.now())
 
-    santri = relationship('Santri', back_populates='santri')
-    spp = relationship('Spp', back_populates='spp')
+    spp = relationship('Spp', back_populates='spp_santris')
+
+
+Santri.spp_santri = relationship('SppSantri', back_populates='santri')
+SppSantri.santri = relationship('Santri', back_populates='spp_santri')

@@ -1,9 +1,8 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from models.Users import Users
 from typing import Any, Dict
 from flask import request
 from getpass import getpass
-from models import Session
+from models import Session, Users
 from controllers import response
 from auth import Auth
 import json

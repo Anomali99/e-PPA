@@ -1,7 +1,6 @@
 from flask import request
-from models import Session
-from typing import List, Any, Dict, Optional, Union, Tuple
-from models.Santri import Santri, School
+from models import Session, Santri, School
+from typing import List, Any, Dict, Optional, Tuple
 from controllers import response
 import json
 
