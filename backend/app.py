@@ -1,12 +1,14 @@
-from flask import Flask
+from flask import Flask, jsonify
 from routes.santri_bp import santri_bp
 from routes.user_bp import user_bp
 from routes.spp_bp import spp_bp
 from argparse import ArgumentParser, Namespace
 from controllers.usersController import addUser
+from flask_cors import CORS
 
 
 app  = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*", "allow_headers": "Content-Type"}})
 
 app.config.from_object('config')
 
