@@ -30,6 +30,7 @@ def _santri_parse_json(data: Optional[Tuple[Santri, School]]) -> Dict[str, Any]:
             'parent': santri.parent,
             'gender': santri.gender,
             'school_name': school.name, 
+            'school_uuid': school.school_uuid, 
         }
     else:
         return {}
@@ -44,6 +45,18 @@ def _santri_parse_json_list(data: Optional[List[Tuple[Santri, School]]]) -> List
     else:
         return []
     
+
+def _santri_count(data:Optional[List[Santri]]) -> Tuple[int, int]:
+    putra:int = 0
+    putri:int = 0
+    if(data):
+        for value in data:
+            if value.gender.lower() == 'l':
+                putra += 1
+            elif value.gender.lower() == 'p':
+                putri += 1
+    return putra, putri
+
 
 def addSchool():
     session = Session()
@@ -99,6 +112,7 @@ def addSantri():
     session = Session()
     try:
         data:Dict[str, Any] = json.loads(request.get_data())
+        print(data)
         school_uuid:str = data.get('school_uuid') if data else None
         name:str = data.get('name') if data else None
         nis:str = data.get('nis') if data else None
@@ -169,6 +183,24 @@ def getAllSantri():
         session.close()
 
 
+def getSantriByGender():
+    session = Session()
+    try:
+        gender:str = request.args.get('g')
+        if gender:
+            santri = session.query(Santri, School).join(School, Santri.school_id == School.school_id).filter(Santri.gender == gender.lower()).all()
+            school = session.query(School).all()
+            santri_parse = _santri_parse_json_list(santri)
+            school_pares = _school_parse_json(school)
+            return response(status_code=200, message='get data success', data={"school":school_pares, "santri":santri_parse})
+        else:
+            return response(status_code=400, message='requires g[l/p] params')
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
+
+
 def getSantriByNIS():
     session = Session()
     try:
@@ -186,6 +218,27 @@ def getSantriByNIS():
                 return response(status_code=200, message='No data found')
         else:
             return response(status_code=400, message='requires nis params')
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
+
+def getAllData():
+    session = Session()
+    try:
+        santri = session.query(Santri).all()
+        school = session.query(School).all()
+        school_length = len(school)
+        putra, putri = _santri_count(santri)
+        return response(
+            status_code=200,
+            message='get data success',
+            data={
+                'putri':putri,
+                'putra':putra,
+                "sekolah":school_length
+            }
+        )
     except Exception as e:
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:

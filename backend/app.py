@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from routes.santri_bp import santri_bp
 from routes.user_bp import user_bp
 from routes.spp_bp import spp_bp
@@ -8,7 +8,11 @@ from flask_cors import CORS
 
 
 app  = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*", "allow_headers": "Content-Type"}})
+CORS(app, resources={r"/*": {
+    "origins": "http://localhost:5173", 
+    "methods": "GET,POST,PUT,DELETE,OPTIONS", 
+    "allow_headers": "Content-Type, Authorization"
+    }})
 
 app.config.from_object('config')
 
