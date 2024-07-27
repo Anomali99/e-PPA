@@ -112,7 +112,6 @@ def addSantri():
     session = Session()
     try:
         data:Dict[str, Any] = json.loads(request.get_data())
-        print(data)
         school_uuid:str = data.get('school_uuid') if data else None
         name:str = data.get('name') if data else None
         nis:str = data.get('nis') if data else None

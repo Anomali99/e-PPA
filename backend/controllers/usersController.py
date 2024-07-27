@@ -8,7 +8,6 @@ from auth import Auth
 import json
 
 def checkToken():
-    print(1)
     return response(status_code=200,message='token valid')
 
 def login():
