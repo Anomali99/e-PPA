@@ -12,7 +12,7 @@ santri_bp.route('/school', methods=['GET'])(auth.login_required(santriController
 santri_bp.route('/school', methods=['POST'])(auth.login_required(santriController.addSchool))
 santri_bp.route('/school', methods=['PUT'])(auth.login_required(santriController.updateSchool))
 
-santri_bp.route('/bynis', methods=['GET'])(auth.login_required(santriController.getSantriByNIS))
+santri_bp.route('/bynis', methods=['GET'])(santriController.getSantriByNIS)
 santri_bp.route('/bygender', methods=['GET'])(auth.login_required(santriController.getSantriByGender))
 santri_bp.route('/all', methods=['GET'])(auth.login_required(santriController.getAllData))
 

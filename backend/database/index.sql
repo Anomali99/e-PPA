@@ -27,6 +27,7 @@
     `address` text not null,
     `parent` varchar(30) not null,
     `gender` varchar(1) not null,
+    `yatim` boolean not null,
     primary key(`santri_id`),
     constraint `fk_school_id` foreign key (`school_id`) references `school`(`school_id`)
  ) engine=InnoDB default charset=utf8;
@@ -36,7 +37,8 @@
     `spp_uuid` text not null,
     `month` varchar(10) not null,
     `year` varchar(4) not null,
-    `nominal` int not null,
+    `nominal_spp` int not null,
+    `nominal_kosma` int not null,
     primary key(`spp_id`)
  ) engine=InnoDB default charset=utf8;
 
@@ -50,4 +52,13 @@
     constraint `fk_spp_id` foreign key (`spp_id`) references `spp`(`spp_id`),
     constraint `fk_santri_id` foreign key (`santri_id`) references `santri`(`santri_id`)
  ) engine=InnoDB default charset=utf8;
+
+ create table if not exists `upload` (
+   `upload_id` int auto_increment,
+   `santri_id` int not null,
+   `filename` text not null,
+   `datetime` datetime not null,
+   primary key(`upload_id`),
+    constraint `fk_santri_upload_id` foreign key (`santri_id`) references `santri`(`santri_id`)
+ )
 

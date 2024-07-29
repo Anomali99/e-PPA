@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from routes.santri_bp import santri_bp
 from routes.user_bp import user_bp
 from routes.spp_bp import spp_bp
@@ -19,6 +19,11 @@ app.config.from_object('config')
 app.register_blueprint(user_bp, url_prefix='/users')
 app.register_blueprint(santri_bp, url_prefix='/santri')
 app.register_blueprint(spp_bp, url_prefix='/spp')
+
+
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
 
 
 parser = ArgumentParser()

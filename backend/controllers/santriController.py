@@ -1,5 +1,5 @@
 from flask import request
-from models import Session, Santri, School
+from models import Session, Santri, School, Spp, SppSantri
 from typing import List, Any, Dict, Optional, Tuple
 from controllers import response
 import json
@@ -29,6 +29,7 @@ def _santri_parse_json(data: Optional[Tuple[Santri, School]]) -> Dict[str, Any]:
             'address': santri.address,
             'parent': santri.parent,
             'gender': santri.gender,
+            'yatim': santri.yatim,
             'school_name': school.name, 
             'school_uuid': school.school_uuid, 
         }
@@ -118,6 +119,7 @@ def addSantri():
         address:str = data.get('address') if data else None
         parent:str = data.get('parent') if data else None
         gender:str = data.get('gender') if data else None
+        yatim:bool = data.get('yatim') if data else None
         if school_uuid and name and nis and address and parent and gender:
             school = session.query(School).filter(School.school_uuid == school_uuid).first()
             santri = Santri(
@@ -127,12 +129,13 @@ def addSantri():
                 address= address,
                 parent= parent,
                 gender= gender,
+                yatim= yatim,
             )
             session.add(santri)
             session.commit()
             return response(status_code=200, message='add santri success')
         else:
-            return response(status_code=400, message='requires school_uuid, name, nis, address, parent and gender')
+            return response(status_code=400, message='requires school_uuid, name, nis, address, parent, yatim and gender')
     except Exception as e:
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:
@@ -150,7 +153,8 @@ def updateSantri():
         address:str = data.get('address') if data else None
         parent:str = data.get('parent') if data else None
         gender:str = data.get('gender') if data else None
-        if school_uuid and santri_uuid and name and nis and address and parent and gender:
+        yatim:bool = data.get('yatim') if data else None
+        if school_uuid and santri_uuid and name and nis and address and parent and gender and yatim:
             school = session.query(School).filter(School.school_uuid == school_uuid).first()
             santri = session.query(Santri).filter(Santri.santri_uuid == santri_uuid).first()
             santri.name = name
@@ -158,12 +162,13 @@ def updateSantri():
             santri.address = address
             santri.parent = parent
             santri.gender = gender
+            santri.yatim = yatim
             santri.school_id = school.school_id
             session.merge(santri)
             session.commit()
             return response(status_code=200, message='update santri success')
         else:
-            return response(status_code=400, message='requires school_uuid, santri_uuid, name, nis, address, parent and gender')
+            return response(status_code=400, message='requires school_uuid, santri_uuid, name, nis, address, parent, yatim and gender')
     except Exception as e:
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:
@@ -200,6 +205,42 @@ def getSantriByGender():
         session.close()
 
 
+def _check_exists(id:int,spp_santri:List[SppSantri]) -> bool:
+    for value in spp_santri:
+        if value.spp_id == id:
+            return False
+    return True
+
+
+def _total_tagihan(spp:Spp,yatim:bool) -> Dict[str,Any]:
+    total = spp.nominal_kosma + spp.nominal_spp
+    if yatim:
+        total = total - 100000
+    return {
+        "spp_uuid": spp.spp_uuid,
+        "year": spp.year,
+        "month": spp.month,
+        "nominal_spp": spp.nominal_spp,
+        "nominal_kosma": spp.nominal_kosma,
+        "total": total
+    }
+
+
+def _get_tagihan_santri(spp:List[Spp],spp_santri:List[SppSantri],yatim:bool) -> Dict[str,Any]:
+    total:int = 0
+    tagihan:List[Dict[str,Any]] = []
+    for value in spp:
+        if _check_exists(value.spp_id,spp_santri):
+            result = _total_tagihan(value,yatim)
+            count:int = result.get('total')
+            total = total + count
+            tagihan.append(result)
+    return {
+        "total": total,
+        "spp": tagihan
+    }
+
+
 def getSantriByNIS():
     session = Session()
     try:
@@ -207,11 +248,17 @@ def getSantriByNIS():
         if nis:
             santri = session.query(Santri, School).join(School, Santri.school_id == School.school_id).filter(Santri.nis==nis).first()
             if santri:
+                spp_santri = session.query(SppSantri).filter(SppSantri.santri_id == santri[0].santri_id).all()
+                spp = session.query(Spp).all()
                 santri_parse = _santri_parse_json(santri)
+                tagihan = _get_tagihan_santri(spp,spp_santri,santri[0].yatim)
                 return response(
                     status_code=200,
                     message='get data success',
-                    data=santri_parse
+                    data={
+                        "santri":santri_parse,
+                        "tagihan":tagihan
+                    }
                 )
             else:
                 return response(status_code=200, message='No data found')
@@ -221,6 +268,7 @@ def getSantriByNIS():
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:
         session.close()
+
 
 def getAllData():
     session = Session()

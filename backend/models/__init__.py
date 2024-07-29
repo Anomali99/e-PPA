@@ -9,5 +9,5 @@ Session = sessionmaker(bind=Engine)
 
 
 from .Santri import Santri, School
-from .Spp import Spp, SppSantri
+from .Spp import Spp, SppSantri, Upload
 from .Users import Users

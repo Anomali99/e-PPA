@@ -1,8 +1,9 @@
 from flask import request
-from models import Session, Spp, Santri, SppSantri
+from models import Session, Spp, Santri, SppSantri, Upload
 from typing import Any, List, Dict, Optional, Tuple
 from controllers import response
-import json
+from uuid import uuid4
+import json, os, config
 
 
 def _spp_parse_json(data:Optional[List[Spp]]) -> List[Dict[str,Any]]:
@@ -12,7 +13,8 @@ def _spp_parse_json(data:Optional[List[Spp]]) -> List[Dict[str,Any]]:
             results.append({
                 'year': value.year,
                 'month': value.month,
-                'nominal': value.nominal,
+                'nominal_spp': value.nominal_spp,
+                'nominal_kosma': value.nominal_kosma,
                 'spp_uuid': value.spp_uuid
             })
         return results
@@ -26,12 +28,17 @@ def addSpp():
         data:Dict[str,Any] = json.loads(request.get_data())
         month:str = data.get('month') if data else None
         year:str = data.get('year') if data else None
-        nominal:int = int(data.get('nominal')) if data else None
-        if month and year and nominal:
+        nominal_spp:int = int(data.get('nominal_spp')) if data else None
+        nominal_kosma:int = int(data.get('nominal_kosma')) if data else None
+        if month and year and nominal_spp and nominal_kosma:
+            exists = session.query(Spp).filter(Spp.year==year).filter(Spp.month==month).first()
+            if exists:
+                return response(status_code=401, message='data duplicate')
             spp = Spp(
                 month=month,
                 year=year,
-                nominal=nominal,
+                nominal_spp=nominal_spp,
+                nominal_kosma=nominal_kosma
             )
             session.add(spp)
             session.commit()
@@ -103,9 +110,7 @@ def addSppSantri():
             santri = session.query(Santri).filter(Santri.santri_uuid.in_(uniqe_result[0])).all()
             spp = session.query(Spp).filter(Spp.spp_uuid.in_(uniqe_result[1])).all()
             spp_santri = _add_spp_santri_handle(filter_result,santri,spp)
-            for value in spp_santri:
-                session.add(value)
-            # session.add_all(spp_santri)
+            session.add_all(spp_santri)
             session.commit()
             return response(status_code=200, message='add spp santri success')
         else:
@@ -136,18 +141,22 @@ def _get_santri_payment(spp_santri:Optional[List[SppSantri]],spp_id:str,santri_i
     return None
 
 
-def _get_spp_payments(spp:Optional[List[Spp]],spp_santri:Optional[List[SppSantri]],santri_id:str) -> Tuple[List[Dict[str,Any]],int]:
+def _get_spp_payments(spp:Optional[List[Spp]],spp_santri:Optional[List[SppSantri]],santri_id:str,santri_yatim:bool) -> Tuple[List[Dict[str,Any]],int]:
     if(spp):
         result:List[Dict[str,Any]] = []
         total:int = 0
         for value in spp:
             santri_payment = _get_santri_payment(spp_santri,value.spp_id,santri_id)
+            count = value.nominal_spp + value.nominal_kosma
+            if santri_yatim:
+                count = count - 100000
             if santri_payment == None:
-                total = total + value.nominal
+                total = total + count
             result.append({
                 "spp_uuid": value.spp_uuid,
                 "year": value.year,
                 "month": value.month,
+                "total": count,
                 "spp_santri_uuid": santri_payment if santri_payment else ''
             })
         return result, total
@@ -159,7 +168,7 @@ def _spp_santri_handler(santri:Optional[List[Santri]],spp:Optional[List[Spp]],sp
     if(santri):
         results:List[Dict[str,Any]] = []
         for value in santri:
-            spp_result = _get_spp_payments(spp,spp_santri,value.santri_id)
+            spp_result = _get_spp_payments(spp,spp_santri,value.santri_id,value.yatim)
             results.append({
                 "santri_uuid":value.santri_uuid,
                 "name": value.name,
@@ -188,6 +197,35 @@ def getSppSantri():
                 "santri": santri_payments
             }
         )
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
+
+
+def uploadImage():
+    session = Session()
+    try:
+        if 'image' in request.files and 'uuid' in request.form:
+            file = request.files.get('image')
+            uuid = request.form.get('uuid')
+            santri = session.query(Santri).filter(Santri.santri_uuid == uuid).first()
+            if santri:
+                extensi = file.filename.split('.')
+                filename = f'{str(uuid4())}.{extensi[len(extensi)-1]}'
+                upload = Upload(
+                    santri_id=santri.santri_id,
+                    filename=filename
+                )
+                session.add(upload)
+                filepath = os.path.join(config.basedir, 'static', filename)
+                file.save(filepath)
+                session.commit()
+                return response(status_code=200, message='upload success')
+            else:
+                return response(status_code=401, message='santri not found')
+        else:
+            return response(status_code=401, message='requires image and uuid')
     except Exception as e:
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:

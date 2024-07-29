@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import uuid
@@ -23,5 +23,6 @@ class Santri(Base):
     address = Column(String, nullable=False)
     parent = Column(String(30), nullable=False)
     gender = Column(String(1), nullable=False)
+    yatim = Column(Boolean, nullable=False)
     
     school = relationship('School', back_populates='santris')
