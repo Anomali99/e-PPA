@@ -154,7 +154,7 @@ def updateSantri():
         parent:str = data.get('parent') if data else None
         gender:str = data.get('gender') if data else None
         yatim:bool = data.get('yatim') if data else None
-        if school_uuid and santri_uuid and name and nis and address and parent and gender and yatim:
+        if school_uuid and santri_uuid and name and nis and address and parent and gender:
             school = session.query(School).filter(School.school_uuid == school_uuid).first()
             santri = session.query(Santri).filter(Santri.santri_uuid == santri_uuid).first()
             santri.name = name
