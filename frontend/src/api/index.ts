@@ -139,6 +139,21 @@ type SppSantriType = {
   spp_santri_uuid: string;
 };
 
+type UploadResponseType = {
+  status: number;
+  message: string;
+  data?: {
+    filename: string;
+    datetime: string;
+    name: string;
+    nis: string;
+    address: string;
+    parent: string;
+    gender: string;
+    school_name: string;
+  }[];
+};
+
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 3000,
@@ -381,6 +396,18 @@ const uploadImage = async (
   }
 };
 
+const getUploadImage = async (): Promise<UploadResponseType> => {
+  const upload_enpoint = "/spp/upload";
+  try {
+    const res: AxiosResponse<UploadResponseType> = await apiClient.get(
+      upload_enpoint
+    );
+    return res.data;
+  } catch (error) {
+    return error as UploadResponseType;
+  }
+};
+
 export {
   login,
   checkToken,
@@ -396,4 +423,6 @@ export {
   addSppPayment,
   addSppSantri,
   uploadImage,
+  getUploadImage,
+  API_BASE_URL,
 };

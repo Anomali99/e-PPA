@@ -6,6 +6,7 @@ import {
   DataPage,
   PaymentPage,
   SearchPage,
+  UploadPage,
 } from "../pages";
 import { AuthProvider, ProtectedRoute } from "./middleware";
 
@@ -59,6 +60,14 @@ const Router: React.FC = () => {
           element={
             <ProtectedRoute>
               <PaymentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transfer"
+          element={
+            <ProtectedRoute>
+              <UploadPage />
             </ProtectedRoute>
           }
         />

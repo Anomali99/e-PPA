@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { uploadImage } from "../api";
+import Modal from "./Modal";
 
 type PropsType = {
   uuid: string;
@@ -8,10 +9,12 @@ type PropsType = {
 };
 
 const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
+  if (!isOpen) return null;
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  if (!isOpen) return null;
+  const [open, setOpen] = useState<boolean>(false);
+  const [satusCode, setStatusCode] = useState<number>(0);
+  const [message, setMessage] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -28,7 +31,20 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await uploadImage(file, uuid);
+    const res = await uploadImage(file, uuid);
+    setStatusCode(res.status);
+    setMessage(res.message);
+    setOpen(true);
+  };
+
+  const closeHandle = () => {
+    if (satusCode === 200) {
+      setFile(null);
+      setOpen(false);
+      setIsOpen();
+    } else {
+      setOpen(false);
+    }
   };
 
   return (
@@ -66,12 +82,14 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
           </button>
         </div>
         <div className="w-full flex flex-row gap-0">
-          {previewUrl && (
+          {previewUrl !== null ? (
             <img
               src={previewUrl}
               alt="Preview"
-              className="w-full max-h-96 object-contain mb-4 bg-slate-500 p-4 m-2"
+              className="w-full max-h-96 object-cover mb-4 bg-slate-500 m-2"
             />
+          ) : (
+            ""
           )}
           <div className="w-full max-w-screen-lg p-4">
             <p className="max-h-96 w-full max-w-screen-sm bg-slate-400 rounded-lg p-4 mb-4">
@@ -109,6 +127,12 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={open}
+        message={message}
+        onClose={closeHandle}
+        danger={satusCode !== 200}
+      />
     </div>
   );
 };
