@@ -56,7 +56,7 @@ const PaymentPage: React.FC = () => {
     if (access_level === "3") {
       setPage(1);
     }
-  }, []);
+  }, [page]);
 
   const setPageHandle = (value: number) => {
     if (
