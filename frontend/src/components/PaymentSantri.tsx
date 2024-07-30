@@ -37,7 +37,7 @@ type SppSantriType = {
   spp_santri_uuid: string;
 };
 
-const PaymentPutra: React.FC<PropsType> = ({ data, spp }) => {
+const PaymentPutra: React.FC<PropsType> = (props) => {
   const [payment, setPayment] = useState<PaymentSantriType[]>([]);
   const [paymentSpp, setPaymentSpp] = useState<PaymentSppType[]>([]);
   const [year, setYear] = useState<string>("");
@@ -49,16 +49,20 @@ const PaymentPutra: React.FC<PropsType> = ({ data, spp }) => {
   const max = 12;
 
   useEffect(() => {
-    let access_level = localStorage.getItem("access_level") || "4";
-    setAccessLevel(access_level);
-    setPayment(data);
-    setPaymentSpp(spp);
-    let getyear = Object.keys(getYearUniqe());
-    setYear(getyear[getyear.length - 1]);
-    let size = data.length || 0;
-    let hasilPembagian = size / max;
-    setMaxPage(Math.ceil(hasilPembagian || 0 / max));
-  }, [data, spp]);
+    const getData = async () => {
+      let access_level = localStorage.getItem("access_level") || "4";
+      await setAccessLevel(access_level);
+      await setPayment(props.data);
+      await setPaymentSpp(props.spp);
+      let getyear = Object.keys(getYearUniqe());
+      setYear(getyear[getyear.length - 1]);
+      let size = props.data.length || 0;
+      let hasilPembagian = size / max;
+      setMaxPage(Math.ceil(hasilPembagian || 0 / max));
+    };
+
+    getData();
+  }, [props]);
 
   const handleCheckboxChange = (
     santriUuid: string,
