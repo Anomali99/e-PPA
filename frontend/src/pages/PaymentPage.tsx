@@ -25,7 +25,7 @@ type PaymentSppType = {
 };
 
 const PaymentPage: React.FC = () => {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(-1);
   const [accessLevel, setAccessLevel] = useState<string>("");
   const [putra, setPutra] = useState<PaymentSantriType[]>([]);
   const [putri, setPutri] = useState<PaymentSantriType[]>([]);
@@ -50,6 +50,9 @@ const PaymentPage: React.FC = () => {
     getData();
     const access_level = localStorage.getItem("access_level") || "4";
     setAccessLevel(access_level);
+    if (page === -1) {
+      setPage(0);
+    }
     if (access_level === "3") {
       setPage(1);
     }
