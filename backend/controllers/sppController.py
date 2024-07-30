@@ -1,5 +1,5 @@
 from flask import request
-from models import Session, Spp, Santri, SppSantri, Upload
+from models import Session, Spp, Santri, SppSantri, Upload, School
 from typing import Any, List, Dict, Optional, Tuple
 from controllers import response
 from uuid import uuid4
@@ -226,6 +226,60 @@ def uploadImage():
                 return response(status_code=401, message='santri not found')
         else:
             return response(status_code=401, message='requires image and uuid')
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
+
+
+def _this_santri_by_id(santri:Optional[List[Tuple[Santri,School]]],id:int) -> Optional[Tuple[Santri,School]]:
+    if santri:
+        for value in santri:
+            current:Santri = value[0]
+            if current.santri_id == id:
+                return value
+    return None
+
+def _get_santri_uniqe(uploads:Optional[List[Upload]]) -> List[int]:
+    if uploads:
+        results = set()
+        for value in uploads:
+            results.add(value.santri_id)
+        return list(results)
+    else:
+        return [0]
+
+
+def _upload_parse_json(uploads:Optional[List[Upload]],santri_list:Optional[List[Tuple[Santri, School]]]) -> List[Dict[str,Any]]:
+    if uploads:
+        results:List[Dict[str, Any]] = []
+        for value in uploads:
+            result = _this_santri_by_id(santri_list,value.santri_id)
+            santri:Santri = result[0]
+            school:School = result[1]
+            results.append({
+                'filename':f"/static/{value.filename}",
+                'datetime':value.datetime.strftime("%d-%m-%Y"),
+                'name': santri.name,
+                'nis': santri.nis,
+                'address': santri.address,
+                'parent': santri.parent,
+                'gender': santri.gender,
+                'school_name': school.name, 
+            })
+        return results
+    else:
+        return []
+
+
+def getUploadImage():
+    session = Session()
+    try:
+        image = session.query(Upload).all()
+        santri_id = _get_santri_uniqe(image)
+        santri = session.query(Santri, School).join(School, Santri.school_id == School.school_id).filter(Santri.santri_id.in_(santri_id)).all()
+        results_parse = _upload_parse_json(image,santri)
+        return response(status_code=200, message='get data success',data=results_parse)
     except Exception as e:
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:
