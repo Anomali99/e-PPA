@@ -39,7 +39,7 @@ const SantriPrint = React.forwardRef<HTMLDivElement, PropsType>(
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 mt-6">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200 flex flex-col w-full">
               <tr className="w-full flex flex-row">
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 w-full">
                   Name
                 </th>
                 <th scope="col" className="px-6 py-3 w-full">

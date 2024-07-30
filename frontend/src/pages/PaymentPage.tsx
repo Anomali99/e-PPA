@@ -127,9 +127,9 @@ const PaymentPage: React.FC = () => {
       </ul>
       <div className="w-full flex flex-col mt-4">
         {page === 0 ? (
-          <PaymentSantri data={putra} spp={payment} />
+          <PaymentSantri data={putra} spp={payment} santri="Putra" />
         ) : page === 1 ? (
-          <PaymentSantri data={putri} spp={payment} />
+          <PaymentSantri data={putri} spp={payment} santri="Putri" />
         ) : page === 2 ? (
           <PaymentSpp data={payment} />
         ) : (

@@ -8,6 +8,7 @@ import OnlinePayment from "./OnlinePayment";
 import TagihanPrint from "./TagihanPrint";
 import Pagination from "./Pagination";
 import SantriPrint from "./SantriPrint";
+import PaymentSantriPrint from "./PaymentSantriPrint";
 
 export {
   Modal,
@@ -20,4 +21,5 @@ export {
   TagihanPrint,
   Pagination,
   SantriPrint,
+  PaymentSantriPrint,
 };
