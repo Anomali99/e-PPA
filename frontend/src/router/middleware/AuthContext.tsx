@@ -44,18 +44,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const login = (username: string, user_uuid: string, token: string) => {
+  const login = async (username: string, user_uuid: string, token: string) => {
     setIsAuthenticated(true);
     localStorage.setItem("username", username);
-    console.log(1);
     localStorage.setItem("user_uuid", user_uuid);
-    console.log(2);
     localStorage.setItem("token", token);
-    console.log(3);
     localStorage.setItem("access_level", getAccessLevel(username));
-    console.log(4);
-    navigate("/dashboard");
-    console.log(5);
   };
 
   const logout = () => {

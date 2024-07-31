@@ -75,7 +75,7 @@ const PaymentPage: React.FC = () => {
         <li className="self-center px-4">
           <a href="/dashboard">
             <svg
-              className="size-8 hover:scale-110 hover:text-blue-600"
+              className="size-5 md:size-10 hover:scale-110 hover:text-blue-600"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 -960 960 960"
               fill="currentColor"
@@ -125,7 +125,7 @@ const PaymentPage: React.FC = () => {
           </button>
         </li>
       </ul>
-      <div className="w-full flex flex-col mt-4">
+      <div className="w-full flex flex-col mt-2 md:mt-4">
         {page === 0 ? (
           <PaymentSantri data={putra} spp={payment} santri="Putra" />
         ) : page === 1 ? (

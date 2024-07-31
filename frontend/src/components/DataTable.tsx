@@ -81,48 +81,78 @@ const DataTable: React.FC<ParamsType> = ({
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+        <thead className="text-[8px] md:text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
             {isSchool ? (
               <>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Name
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   School UUID
                 </th>
               </>
             ) : (
               <>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Name
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Santri UUID
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   NIS
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Address
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Parent
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Gender
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   Yatim
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   School Name
                 </th>
               </>
             )}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-[8px] text-nowrap md:text-wrap md:text-xs">
           {isSchool
             ? getSchoolSize().map((item) => (
                 <tr

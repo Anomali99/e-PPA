@@ -100,7 +100,7 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
   const modalHandle = () => setIsOpen(!isOpen);
 
   return (
-    <div className="w-full h-full p-4 flex justify-center flex-col gap-6">
+    <div className="w-full h-full p-4 flex justify-center flex-col gap-3 md:gap-6">
       {content !== 3 ? (
         <SantriPrint
           ref={componentRef}
@@ -110,10 +110,10 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
       ) : (
         ""
       )}
-      <h1 className="text-xl font-bold flex flex-row gap-4 items-center">
+      <h1 className="text-sm md:text-xl font-bold flex flex-row gap-2 md:gap-4 items-center">
         <a href="/dashboard">
           <svg
-            className="size-10 hover:scale-110 hover:text-blue-600"
+            className="size-5 md:size-10 hover:scale-110 hover:text-blue-600"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 -960 960 960"
             fill="currentColor"
@@ -139,20 +139,19 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
         max={max}
       />
 
-      <div className="w-full flex flex-row justify-between items-center">
+      <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-2">
         <Pagination page={page} max={maxPage} setCurrent={setPage} />
         <div className="w-full flex justify-end">
           {["1", "2", "3"].includes(accessLevel) ? (
             <button
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
+              className="relative h-max inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
               onClick={modalHandle}
             >
-              <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+              <span className="relative flex items-center px-2 md:px-5 py-1.5 md:py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                 <svg
+                  className="size-4 md:size-6"
                   xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
                   viewBox="0 -960 960 960"
-                  width="24px"
                   fill="currentColor"
                 >
                   {current.uuid === "" ? (
@@ -169,15 +168,14 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
           )}
           {content !== 3 || current.uuid !== "" ? (
             <button
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-600 to-yellow-500 group-hover:from-green-600 group-hover:to-yellow-500 hover:text-white focus:outline-none"
+              className="relative inline-flex items-center h-max justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-600 to-yellow-500 group-hover:from-green-600 group-hover:to-yellow-500 hover:text-white focus:outline-none"
               onClick={printOrCancel}
             >
-              <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+              <span className="relative flex items-center px-2 md:px-5 py-1.5 md:py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                 <svg
+                  className="size-4 md:size-6"
                   xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
                   viewBox="0 -960 960 960"
-                  width="24px"
                   fill="currentColor"
                 >
                   {current.uuid === "" ? (

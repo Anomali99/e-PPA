@@ -189,84 +189,102 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
 
   return (
     <>
-      <div className="w-full flex flex-row gap-4 justify-end items-center mb-4">
-        <PaymentSantriPrint
-          ref={componentRef}
-          data={payment}
-          santri={props.santri}
-        />
-        <h1 className=" font-bold ">Triwulan: </h1>
-        <button
-          className={` px-4 py-2 text-white font-bold rounded-lg ${
-            month === 1
-              ? "bg-gray-500 cursor-not-allowed"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-          onClick={() => setMonth(1)}
-        >
-          1
-        </button>
-        <button
-          className={` px-4 py-2 text-white font-bold rounded-lg ${
-            month === 2
-              ? "bg-gray-500 cursor-not-allowed"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-          onClick={() => setMonth(2)}
-        >
-          2
-        </button>
-        <button
-          className={` px-4 py-2 text-white font-bold rounded-lg ${
-            month === 3
-              ? "bg-gray-500 cursor-not-allowed"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-          onClick={() => setMonth(3)}
-        >
-          3
-        </button>
-        <button
-          className={` px-4 py-2 text-white font-bold rounded-lg ${
-            month === 4
-              ? "bg-gray-500 cursor-not-allowed"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-          onClick={() => setMonth(4)}
-        >
-          4
-        </button>
-        <h1 className=" font-bold ">Tahun: </h1>
-        <select
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-max p-2.5"
-        >
-          {Object.keys(getYearUniqe()).map((item) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </select>
+      <PaymentSantriPrint
+        ref={componentRef}
+        data={payment}
+        santri={props.santri}
+      />
+      <div className="w-full flex flex-row gap-4 justify-between md:justify-end items-center mb-4">
+        <div className="flex flex-col md:flex-row gap-x-4 gap-y-1.5 items-center">
+          <h1 className="text-xs md:text-normal font-bold ">Triwulan: </h1>
+          <div className="flex flex-row gap-4">
+            <button
+              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
+                month === 1
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gray-300 hover:bg-gray-400"
+              }`}
+              onClick={() => setMonth(1)}
+            >
+              1
+            </button>
+            <button
+              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
+                month === 2
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gray-300 hover:bg-gray-400"
+              }`}
+              onClick={() => setMonth(2)}
+            >
+              2
+            </button>
+            <button
+              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
+                month === 3
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gray-300 hover:bg-gray-400"
+              }`}
+              onClick={() => setMonth(3)}
+            >
+              3
+            </button>
+            <button
+              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
+                month === 4
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gray-300 hover:bg-gray-400"
+              }`}
+              onClick={() => setMonth(4)}
+            >
+              4
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row gap-x-4 gap-y-1.5 items-center">
+          <h1 className="text-xs md:text-normal font-bold text-right">
+            Tahun:{" "}
+          </h1>
+          <select
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            className="text-xs md:text-normal bg-gray-50 border border-gray-300 text-gray-900 md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-max p-1 md:p-2.5"
+          >
+            {Object.keys(getYearUniqe()).map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+          <thead className="text-[8px] md:text-xs text-gray-700 uppercase bg-gray-200">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Name
               </th>
               {getPayment().map((item) => (
-                <th key={item.spp_uuid} scope="col" className="px-6 py-3">
+                <th
+                  key={item.spp_uuid}
+                  scope="col"
+                  className="text-center md:text-left md:px-6 md:py-3"
+                >
                   {item.month + " " + item.year}
                 </th>
               ))}
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Total
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-[8px] text-nowrap md:text-wrap md:text-xs">
             {getPaymentSize().map((item) => (
               <tr
                 key={item.santri_uuid}
@@ -315,20 +333,19 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end mt-4">
+      <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-2 mt-2 md:mt-4">
         <Pagination page={page} max={maxPage} setCurrent={setPage} />
         <div className="w-full flex justify-end">
           {["1", "2", "3"].includes(accessLevel) ? (
             <button
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
+              className="relative h-max inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
               onClick={submitHandle}
             >
-              <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+              <span className="relative flex items-center px-2 md:px-5 py-1.5 md:py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                 <svg
+                  className="size-4 md:size-6"
                   xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
                   viewBox="0 -960 960 960"
-                  width="24px"
                   fill="currentColor"
                 >
                   <path d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z" />
@@ -340,15 +357,14 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
             ""
           )}
           <button
-            className="relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-600 to-yellow-500 group-hover:from-green-600 group-hover:to-yellow-500 hover:text-white focus:outline-none ml-4"
+            className="relative inline-flex items-center h-max justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-600 to-yellow-500 group-hover:from-green-600 group-hover:to-yellow-500 hover:text-white focus:outline-none"
             onClick={handlePrint}
           >
-            <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+            <span className="relative flex items-center px-2 md:px-5 py-1.5 md:py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
               <svg
+                className="size-4 md:size-6"
                 xmlns="http://www.w3.org/2000/svg"
-                height="24px"
                 viewBox="0 -960 960 960"
-                width="24px"
                 fill="currentColor"
               >
                 <path d="M640-640v-120H320v120h-80v-200h480v200h-80Zm-480 80h640-640Zm560 100q17 0 28.5-11.5T760-500q0-17-11.5-28.5T720-540q-17 0-28.5 11.5T680-500q0 17 11.5 28.5T720-460Zm-80 260v-160H320v160h320Zm80 80H240v-160H80v-240q0-51 35-85.5t85-34.5h560q51 0 85.5 34.5T880-520v240H720v160Zm80-240v-160q0-17-11.5-28.5T760-560H200q-17 0-28.5 11.5T160-520v160h80v-80h480v80h80Z" />
