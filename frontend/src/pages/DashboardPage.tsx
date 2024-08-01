@@ -28,18 +28,18 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-gray-200 min-h-screen">
-      <div className="flex  py-12 px-10">
+    <div className="bg-gray-200 h-screen overflow-y-auto md:min-h-screen">
+      <div className="flex h-max w-full py-12 px-10">
         <div className="w-full flex flex-col gap-6">
-          <div className="flex flex-row gap-3">
-            <div className="bg-no-repeat bg-red-200 border border-red-300 rounded-xl w-7/12 mr-2 p-6">
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="bg-no-repeat bg-red-200 border border-red-300 rounded-xl w-full md:w-7/12 p-6">
               <div className="flex flex-row justify-between">
-                <p className="text-5xl text-indigo-900 capitalize">
+                <p className="text-2xl md:text-5xl text-indigo-900 capitalize">
                   Welcome <br />
                   <strong>{localStorage.getItem("username")}</strong>
                 </p>
                 <svg
-                  className="size-24 text-red-400 mr-4 cursor-pointer hover:text-red-500"
+                  className="size-10 md:size-24 text-red-400 md:mr-4 cursor-pointer hover:text-red-500"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960"
                   fill="currentColor"
@@ -48,102 +48,110 @@ const DashboardPage: React.FC = () => {
                   <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
                 </svg>
               </div>
-              <span className="bg-red-300 text-xl text-white inline-block rounded-full mt-12 px-8 py-2">
+              <span className="bg-red-300 md:text-xl text-white inline-block rounded-full mt-5 px-4 py-1 md:mt-12 md:px-8 md:py-2">
                 <strong>{time}</strong>
               </span>
             </div>
 
-            <div className="bg-no-repeat bg-orange-200 border flex flex-col justify-between border-orange-300 rounded-xl w-5/12 ml-2 p-6">
-              <p className="text-7xl text-indigo-900">Santri</p>
-              <p className="self-end text-7xl text-indigo-900 font-bold">
+            <div className="bg-no-repeat bg-orange-200 border flex flex-row md:flex-col justify-between border-orange-300 rounded-xl w-full md:w-5/12 p-6">
+              <p className="text-2xl font-bold md:font-normal md:text-7xl text-indigo-900">
+                Santri
+              </p>
+              <p className="self-end text-3xl md:text-7xl text-indigo-900 font-bold">
                 {putra + putri}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-row h-64 gap-6">
+          <div className="flex flex-col md:flex-row md:h-64 gap-6">
             <div
-              className={`bg-white rounded-xl shadow-lg px-6 py-4 w-4/12 ${
+              className={`bg-white rounded-xl shadow-lg px-6 py-4 md:w-4/12 ${
                 accessLevel === "2" ? "cursor-not-allowed" : "hover:bg-gray-400"
               }`}
             >
               <a
-                className={`w-full h-full flex flex-col justify-between ${
+                className={`w-full h-full flex flex-row md:flex-col justify-between ${
                   accessLevel === "2" ? "cursor-not-allowed" : ""
                 }`}
                 href={accessLevel === "2" ? "" : "/putri"}
               >
                 <div className="w-full flex items-center">
                   <svg
-                    className="size-24 text-gray-600"
+                    className="size-10 md:size-24 text-gray-600"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
                     fill="currentColor"
                   >
                     <path d="M400-80v-240H280l122-308q10-24 31-38t47-14q26 0 47 14t31 38l122 308H560v240H400Zm80-640q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720Z" />
                   </svg>
-                  <p className="text-gray-600 text-6xl">Putri</p>
+                  <p className="text-gray-600 text-2xl font-bold md:font-normal md:text-6xl">
+                    Putri
+                  </p>
                 </div>
-                <p className="text-gray-600 text-6xl font-bold self-end">
+                <p className="text-gray-600 text-3xl md:text-6xl font-bold self-end">
                   {putri}
                 </p>
               </a>
             </div>
             <div
-              className={`bg-white rounded-xl shadow-lg px-6 py-4 w-4/12 ${
+              className={`bg-white rounded-xl shadow-lg px-6 py-4 md:w-4/12 ${
                 accessLevel === "3" ? "cursor-not-allowed" : "hover:bg-gray-400"
               }`}
             >
               <a
-                className={`w-full h-full flex flex-col justify-between ${
+                className={`w-full h-full flex flex-row md:flex-col justify-between ${
                   accessLevel === "3" ? "cursor-not-allowed" : ""
                 }`}
                 href={accessLevel === "3" ? "" : "/putra"}
               >
                 <div className="w-full flex items-center">
                   <svg
-                    className="size-24 text-gray-600"
+                    className="size-10 md:size-24 text-gray-600"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
                     fill="currentColor"
                   >
                     <path d="M400-80v-280h-80v-240q0-33 23.5-56.5T400-680h160q33 0 56.5 23.5T640-600v240h-80v280H400Zm80-640q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720Z" />
                   </svg>
-                  <p className="text-gray-600 text-6xl">Putra</p>
+                  <p className="text-gray-600 text-2xl font-bold md:font-normal md:text-6xl">
+                    Putra
+                  </p>
                 </div>
-                <p className="text-gray-600 text-6xl font-bold self-end">
+                <p className="text-gray-600 text-3xl md:text-6xl font-bold self-end">
                   {putra}
                 </p>
               </a>
             </div>
-            <div className="bg-white rounded-xl shadow-lg px-6 py-4 w-4/12 hover:bg-gray-400">
+            <div className="bg-white rounded-xl shadow-lg px-6 py-4 md:w-4/12 hover:bg-gray-400">
               <a
-                className="w-full h-full flex flex-col justify-between"
+                className="w-full h-full flex flex-row md:flex-col justify-between"
                 href="/school"
               >
                 <div className="w-full flex items-center">
                   <svg
-                    className="size-24 text-gray-600"
+                    className="size-10 md:size-24 text-gray-600"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
                     fill="currentColor"
                   >
                     <path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z" />
                   </svg>
-                  <p className="text-gray-600 text-6xl ml-4">Sekolah</p>
+                  <p className="text-gray-600 font-bold text-2xl md:font-normal md:text-6xl ml-4">
+                    Sekolah
+                  </p>
                 </div>
-                <p className="text-gray-600 text-6xl font-bold self-end">
+                <p className="text-gray-600 text-3xl md:text-6xl font-bold self-end">
                   {sekolah}
                 </p>
               </a>
             </div>
           </div>
-          <div className="w-full flex flex-row gap-6">
-            <div className="bg-white rounded-xl flex flex-col justify-between shadow-lg px-6 h-64 py-4 w-1/2 hover:bg-gray-400">
+          <div className="flex flex-col md:flex-row md:h-64 gap-6">
+            <div className="bg-white rounded-xl flex flex-col justify-between shadow-lg px-6 md:h-64 py-4 w-full md:w-1/2 hover:bg-gray-400">
               <a className="w-full h-full" href="/payment">
                 <div className="w-full flex items-center flex-row justify-between">
                   <svg
-                    className="size-52 text-gray-600 mr-4"
+                    className="size-10 md:size-52 text-gray-600 mr-4"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 502.685 502.685"
@@ -166,18 +174,18 @@ const DashboardPage: React.FC = () => {
         C477.491,336.179,426.497,356.11,363.532,356.11z"
                     />
                   </svg>
-                  <p className="text-gray-600 text-8xl mr-4 font-bold">
+                  <p className="text-gray-600 text-2xl md:text-8xl mr-4 font-bold">
                     Payment
                   </p>
                 </div>
               </a>
             </div>
             {["1", "2", "3"].includes(accessLevel) ? (
-              <div className="bg-white rounded-xl flex flex-col justify-between shadow-lg px-6 h-64 py-4 w-1/2 hover:bg-gray-400">
+              <div className="bg-white rounded-xl flex flex-col justify-between shadow-lg px-6 md:h-64 py-4 w-full md:w-1/2 hover:bg-gray-400">
                 <a className="w-full h-full" href="/transfer">
                   <div className="w-full flex items-center flex-row justify-between">
                     <svg
-                      className="size-52 text-gray-600 mr-4"
+                      className="size-10 md:size-52 text-gray-600 mr-4"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 -960 960 960"
@@ -185,15 +193,15 @@ const DashboardPage: React.FC = () => {
                     >
                       <path d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
                     </svg>
-                    <p className="text-gray-600 text-8xl mr-4 font-bold">
+                    <p className="text-gray-600 text-2xl md:text-8xl mr-4 font-bold">
                       Transfer
                     </p>
                   </div>
                 </a>
               </div>
             ) : (
-              <div className="bg-blue-200 rounded-xl flex justify-center items-center shadow-lg px-6 h-64 py-4 w-1/2 ">
-                <h1 className="bg-blue-300 text-white inline-block rounded-full px-8 py-5 w-max text-5xl font-bold">
+              <div className="bg-blue-200 rounded-xl flex justify-center items-center shadow-lg px-6 md:h-64 py-4 md:w-1/2 ">
+                <h1 className="bg-blue-300 text-white inline-block rounded-full px-4 md:px-8 md:py-5 w-max md:text-5xl font-bold">
                   {new Date().toLocaleDateString("id")}
                 </h1>
               </div>

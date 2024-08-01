@@ -62,12 +62,12 @@ export const Pagination: React.FC<{
 
   return (
     <nav>
-      <ul className="inline-flex -space-x-px text-sm">
+      <ul className="inline-flex -space-x-px text-xs md:text-sm">
         {page > 1 && (
           <li>
             <button
               onClick={() => setCurrent(page - 1)}
-              className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+              className="flex items-center justify-center px-2 h-6 md:px-3 md:h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
             >
               Previous
             </button>
@@ -77,7 +77,7 @@ export const Pagination: React.FC<{
           <li key={index}>
             <button
               onClick={() => typeof item === "number" && setCurrent(item)}
-              className={`flex items-center justify-center px-3 h-8 ${
+              className={`flex items-center justify-center px-2 h-6 md:px-3 md:h-8 ${
                 item === "..."
                   ? "leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                   : page === item
@@ -93,7 +93,7 @@ export const Pagination: React.FC<{
           <li>
             <button
               onClick={() => setCurrent(page + 1)}
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+              className="flex items-center justify-center  px-2 h-6 md:px-3 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
             >
               Next
             </button>

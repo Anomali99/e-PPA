@@ -81,18 +81,20 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
             </svg>
           </button>
         </div>
-        <div className="w-full flex flex-row gap-0">
+        <div className=" w-full flex flex-col-reverse md:flex-row gap-0 justify-center md:justify-start overflow-y-auto md:overflow-y-hidden">
           {previewUrl !== null ? (
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="w-full max-h-96 object-cover mb-4 bg-slate-500 m-2"
-            />
+            <div className="w-full flex justify-center">
+              <img
+                src={previewUrl}
+                alt="Preview"
+                className="md:w-full w-11/12 h-full max-h-80 md:max-h-96 object-cover mb-4 bg-slate-500 md:m-2"
+              />
+            </div>
           ) : (
             ""
           )}
           <div className="w-full max-w-screen-lg p-4">
-            <p className="max-h-96 w-full max-w-screen-sm bg-slate-400 rounded-lg p-4 mb-4">
+            <p className="w-full max-w-screen-sm text-xs md:text-base bg-slate-400 rounded-lg p-2 sm:p-4 mb-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. A
               possimus, unde in inventore consequuntur fugit aspernatur
               molestias ipsam distinctio tenetur consectetur! Eligendi,
@@ -104,7 +106,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
               <div>
                 <label
                   htmlFor="upload"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="block mb-2 text-xs md:text-sm font-medium text-gray-900"
                 >
                   Bukti Transfer
                 </label>
@@ -113,7 +115,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
                   name="upload"
                   id="upload"
                   onChange={handleFileChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  className="text-sm md:text-base bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 sm:p-2.5"
                 />
               </div>
               <button

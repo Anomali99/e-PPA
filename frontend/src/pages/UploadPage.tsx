@@ -27,34 +27,68 @@ const UploadPage: React.FC = () => {
 
   return (
     <div className="w-full p-6">
+      <h1 className="text-sm md:text-xl font-bold flex flex-row gap-4 items-center mb-4">
+        <a href="/dashboard">
+          <svg
+            className="size-5 md:size-10 hover:scale-110 hover:text-blue-600"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            fill="currentColor"
+          >
+            <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+          </svg>
+        </a>
+        <span>Bukti Transfer</span>
+      </h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+          <thead className="text-[8px] md:text-xs text-gray-700 uppercase bg-gray-200">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Name
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 NIS
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 School Name
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Address
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Parent
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Gender
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 Datetime
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-[8px] text-nowrap md:text-wrap md:text-xs">
             {data.map((item, index) => (
               <tr
                 key={index}
@@ -112,7 +146,7 @@ const UploadPage: React.FC = () => {
                 </svg>
               </button>
             </div>
-            <div className="w-full flex flex-row gap-4 mt-4 px-2">
+            <div className="w-full flex flex-col md:flex-row gap-4 mt-4 px-2">
               <div className="w-full">
                 <a
                   className="w-full"
@@ -126,12 +160,12 @@ const UploadPage: React.FC = () => {
                   />
                 </a>
               </div>
-              <div className="w-5/12">
+              <div className="w-full md:w-5/12">
                 <div className="grid gap-4 mb-4 grid-cols-2">
                   <div className="col-span-2">
                     <label
                       htmlFor="name"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       Name
                     </label>
@@ -139,14 +173,14 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="name"
                       value={current.name}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>
                   <div className="col-span-2">
                     <label
                       htmlFor="name"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       NIS
                     </label>
@@ -154,14 +188,14 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="name"
                       value={current.name}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>
                   <div className="col-span-2">
                     <label
                       htmlFor="school"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       School Name
                     </label>
@@ -169,14 +203,14 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="school"
                       value={current.school_name}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>
                   <div className="col-span-2">
                     <label
                       htmlFor="address"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       Address
                     </label>
@@ -184,14 +218,14 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="address"
                       value={current.address}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>
                   <div className="col-span-2">
                     <label
                       htmlFor="parent"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       Parent
                     </label>
@@ -199,14 +233,14 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="parent"
                       value={current.parent}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>
                   <div className="col-span-2">
                     <label
                       htmlFor="gender"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       Gender
                     </label>
@@ -214,14 +248,14 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="gender"
                       value={current.gender}
-                      className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>
                   <div className="col-span-2">
                     <label
                       htmlFor="datetime"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-1 text-[10px] md:text-sm font-medium text-gray-900"
                     >
                       Datetime
                     </label>
@@ -229,7 +263,7 @@ const UploadPage: React.FC = () => {
                       type="text"
                       id="datetime"
                       value={current.datetime}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 md:p-2.5"
                       disabled
                     />
                   </div>

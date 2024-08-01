@@ -56,29 +56,44 @@ const PaymentSpp: React.FC<PropsType> = ({ data }) => {
   };
 
   return (
-    <>
+    <div className="w-full h-full p-4 flex justify-center flex-col gap-3 md:gap-6">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+          <thead className="text-[8px] md:text-xs text-gray-700 uppercase bg-gray-200">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 SPP UUID
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 year
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 month
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 nominal spp
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="text-center md:text-left md:px-6 md:py-3"
+              >
                 nominal kosma
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-[8px] text-nowrap md:text-wrap md:text-xs">
             {getPaymentSize().map((item) => (
               <tr
                 key={item.spp_uuid}
@@ -109,20 +124,19 @@ const PaymentSpp: React.FC<PropsType> = ({ data }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end mt-4">
+      <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-2">
         <Pagination page={page} max={maxPage} setCurrent={setPage} />
         <div className="w-full flex justify-end">
           {["1", "2", "3"].includes(accessLevel) ? (
             <button
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
+              className="relative h-max inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
               onClick={() => setIsOpen(true)}
             >
               <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                 <svg
+                  className="size-4 md:size-6"
                   xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
                   viewBox="0 -960 960 960"
-                  width="24px"
                   fill="currentColor"
                 >
                   <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
@@ -290,7 +304,7 @@ const PaymentSpp: React.FC<PropsType> = ({ data }) => {
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 
