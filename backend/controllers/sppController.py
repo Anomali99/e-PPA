@@ -60,18 +60,22 @@ def _get_uniqe_data(data:List[Dict[str,Any]]) -> Tuple[List[str],List[str]]:
     return list(santri), list(spp)
 
 
-def _check_add_spp_handle(data:List[Dict[str,Any]]) -> List[Dict[str,Any]]:
+def _check_add_spp_handle(data:List[Dict[str,Any]]) -> Tuple[List[Dict[str,Any]],List[str]]:
     results:List[Dict[str,Any]] = []
+    delete_spp:List[str] = []
     for value in data:
         spp_santri_uuid:str = value.get('spp_santri_uuid')
         santri_uuid:str = value.get('santri_uuid')
         spp_uuid:str = value.get('spp_uuid')
+        delete:bool = value.get('delete')
         if spp_uuid == spp_santri_uuid and spp_santri_uuid and santri_uuid and spp_uuid:
             results.append({
                 "santri_uuid":santri_uuid,
                 "spp_uuid":spp_uuid,
             })
-    return results
+        elif delete:
+            delete_spp.append(spp_santri_uuid)
+    return results, delete_spp
 
 
 def _this_santri(santri:List[Santri], uuid:str) -> Optional[Santri]:
@@ -106,10 +110,14 @@ def addSppSantri():
         data:List[Dict[str,Any]] = json.loads(request.get_data()) 
         if data:
             filter_result = _check_add_spp_handle(data)
-            uniqe_result = _get_uniqe_data(filter_result)
+            uniqe_result = _get_uniqe_data(filter_result[0])
             santri = session.query(Santri).filter(Santri.santri_uuid.in_(uniqe_result[0])).all()
             spp = session.query(Spp).filter(Spp.spp_uuid.in_(uniqe_result[1])).all()
-            spp_santri = _add_spp_santri_handle(filter_result,santri,spp)
+            spp_santri = _add_spp_santri_handle(filter_result[0],santri,spp)
+            if len(filter_result[1]) != 0:
+                sppSantri = session.query(SppSantri).filter(SppSantri.spp_santri_uuid.in_(filter_result[1])).all()
+                for value in sppSantri:
+                    session.delete(value)
             session.add_all(spp_santri)
             session.commit()
             return response(status_code=200, message='add spp santri success')
