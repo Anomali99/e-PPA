@@ -1,5 +1,5 @@
 from flask import request
-from models import Session, Santri, School, Spp, SppSantri
+from models import Session, Santri, School, Spp, SppSantri, Upload
 from typing import List, Any, Dict, Optional, Tuple
 from controllers import response
 import json
@@ -286,6 +286,67 @@ def getAllData():
                 "sekolah":school_length
             }
         )
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
+
+
+def deleteSantri():
+    session = Session()
+    try:
+        uuid:str = request.args.get('uuid')
+        santri = session.query(Santri).filter(Santri.santri_uuid==uuid).first()
+        if santri:
+            spp_santri = session.query(SppSantri).filter(SppSantri.santri_id==santri.santri_id).all()
+            uploads = session.query(Upload).filter(Upload.santri_id==santri.santri_id).all()
+            for spp in spp_santri:
+                session.delete(spp)
+            for upload in uploads:
+                session.delete(upload)
+            session.delete(santri)
+            session.commit()
+            return response(status_code=200,message='delete data success')
+        else:
+            return response(status_code=400, message='data not found')
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
+
+
+def _get_santri_id(santri:Optional[List[Santri]])->Optional[List[int]]:
+    if santri and len(santri) != 0:
+        result:List[int]=[]
+        for value in santri:
+            result.append(value.santri_id)
+        return result
+    else:
+        return None
+
+
+def deleteSchool():
+    session = Session()
+    try:
+        uuid:str = request.args.get('uuid')
+        school = session.query(School).filter(School.school_uuid==uuid).first()
+        if school:
+            santri = session.query(Santri).filter(Santri.school_id==school.school_id).all()
+            santri_id = _get_santri_id(santri)
+            if santri_id:
+                spp_santri = session.query(SppSantri).filter(SppSantri.santri_id.in_(santri_id)).all()
+                uploads = session.query(Upload).filter(Upload.santri_id.in_(santri_id)).all()
+                for spp in spp_santri:
+                    session.delete(spp)
+                for upload in uploads:
+                    session.delete(upload)
+            for value in santri:
+                session.delete(value)
+            session.delete(school)
+            session.commit()
+            return response(status_code=200,message='delete data success')
+        else:
+            return response(status_code=400,message='data not found')
     except Exception as e:
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:

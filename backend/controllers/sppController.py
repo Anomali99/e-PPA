@@ -292,3 +292,23 @@ def getUploadImage():
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:
         session.close()
+
+
+def deleteSpp():
+    session = Session()
+    try:
+        uuid:str = request.args.get('uuid')
+        spp = session.query(Spp).filter(Spp.spp_uuid==uuid).first()
+        if spp:
+            spp_santri = session.query(SppSantri).filter(SppSantri.spp_id==spp.spp_id).all()
+            for value in spp_santri:
+                session.delete(value)
+            session.delete(spp)
+            session.commit()
+            return response(status_code=200, message='delete data success')
+        else:
+            return response(status_code=500,message='data not found')
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
