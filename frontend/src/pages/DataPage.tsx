@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { getAllScholl, getSantriByGender } from "../api";
+import { getAllSchool, getSantriByGender } from "../api";
 import { DataModal, DataTable, Pagination, SantriPrint } from "../components";
 
 type SchoolType = {
@@ -49,7 +49,7 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
       const access_level = localStorage.getItem("access_level") || "4";
       setAccessLevel(access_level);
       if (content === 3) {
-        const schoolResponse = await getAllScholl();
+        const schoolResponse = await getAllSchool();
         setSchool(schoolResponse.data || []);
         let size = schoolResponse.data?.length || 0;
         let hasilPembagian = size / max;

@@ -137,6 +137,7 @@ type SppSantriType = {
   santri_uuid: string;
   spp_uuid: string;
   spp_santri_uuid: string;
+  delete: boolean;
 };
 
 type UploadResponseType = {
@@ -322,7 +323,7 @@ const getAll = async (): Promise<AllResponseType> => {
   }
 };
 
-const getAllScholl = async (): Promise<SchoolResponseType> => {
+const getAllSchool = async (): Promise<SchoolResponseType> => {
   const all_endpoint = "/santri/school";
   try {
     const res: AxiosResponse<SchoolResponseType> = await apiClient.get(
@@ -412,7 +413,7 @@ export {
   login,
   checkToken,
   getAll,
-  getAllScholl,
+  getAllSchool,
   getSantriByGender,
   getSantriByNis,
   addSchool,

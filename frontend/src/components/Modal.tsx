@@ -2,15 +2,17 @@ import React from "react";
 
 type ParamsType = {
   isOpen: boolean;
-  onClose: () => void;
-  danger?: boolean;
   message: string;
+  onClose: () => void;
+  onYes?: () => void | null;
+  danger?: boolean;
 };
 
 const Modal: React.FC<ParamsType> = ({
   isOpen,
-  onClose,
   message,
+  onClose,
+  onYes = null,
   danger = true,
 }) => {
   if (!isOpen) return null;
@@ -71,12 +73,28 @@ const Modal: React.FC<ParamsType> = ({
           <h3 className="mb-5 text-lg font-normal text-gray-500 capitalize">
             {message}
           </h3>
+          {onYes !== null ? (
+            <button
+              type="button"
+              className={`text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center ${
+                danger
+                  ? " bg-red-600 hover:bg-red-800 focus:ring-red-300"
+                  : " bg-green-600 hover:bg-green-800 focus:ring-green-300"
+              }`}
+              onClick={onYes}
+            >
+              "Oke"
+            </button>
+          ) : (
+            ""
+          )}
+
           <button
             type="button"
             className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
             onClick={onClose}
           >
-            Oke
+            {onYes === null ? "Oke" : "Cancel"}
           </button>
         </div>
       </div>

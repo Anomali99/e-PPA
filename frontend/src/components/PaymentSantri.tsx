@@ -3,6 +3,7 @@ import { addSppSantri } from "../api";
 import Pagination from "./Pagination";
 import { useReactToPrint } from "react-to-print";
 import PaymentSantriPrint from "./PaymentSantriPrint";
+import Modal from "./Modal";
 
 type SppType = {
   spp_uuid: string;
@@ -10,6 +11,7 @@ type SppType = {
   month: string;
   total: number;
   spp_santri_uuid: string;
+  santri_uuid?: string;
 };
 
 type PaymentSantriType = {
@@ -38,16 +40,25 @@ type SppSantriType = {
   santri_uuid: string;
   spp_uuid: string;
   spp_santri_uuid: string;
+  delete: boolean;
+};
+
+type DeleteSpp = {
+  spp_santri_uuid: string;
+  delete: boolean;
 };
 
 const PaymentPutra: React.FC<PropsType> = (props) => {
   const [payment, setPayment] = useState<PaymentSantriType[]>([]);
   const [paymentSpp, setPaymentSpp] = useState<PaymentSppType[]>([]);
-  const [year, setYear] = useState<string>("");
+  const [accessLevel, setAccessLevel] = useState<string>("");
+  const [deleteSpp, setDeleteSpp] = useState<DeleteSpp[]>([]);
+  const [current, setCurrent] = useState<SppType | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [maxPage, setMaxPage] = useState<number>(1);
   const [month, setMonth] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
-  const [maxPage, setMaxPage] = useState<number>(1);
-  const [accessLevel, setAccessLevel] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
   const max = 12;
 
@@ -102,17 +113,47 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
     );
   };
 
+  const handleCheckbox = (
+    santriUuid: string,
+    sppData: SppType,
+    checked: boolean
+  ) => {
+    if (checked) {
+      setDeleteSpp((prev) =>
+        prev.filter((item) => item.spp_santri_uuid !== sppData.spp_santri_uuid)
+      );
+    } else {
+      setCurrent({ ...sppData, santri_uuid: santriUuid });
+      setIsOpen(true);
+    }
+  };
+
+  const isCecked = (sppData: SppType): boolean => {
+    if (sppData.spp_santri_uuid === "") return false;
+    if (sppData.spp_santri_uuid === null) return false;
+    if (
+      deleteSpp.some((item) => item.spp_santri_uuid === sppData.spp_santri_uuid)
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const submitHandle = async () => {
     const spp_santri: SppSantriType[] = [];
     payment.forEach((item) => {
       const santri_uuid = item.santri_uuid;
       item.spp.forEach((value) => {
         const spp_santri_uuid = value.spp_santri_uuid;
+        const spp_delete = deleteSpp.find(
+          (atributs) => atributs.spp_santri_uuid === spp_santri_uuid
+        )?.delete;
         if (spp_santri_uuid !== "" && spp_santri_uuid !== null) {
           spp_santri.push({
             santri_uuid,
             spp_santri_uuid,
             spp_uuid: value.spp_uuid,
+            delete: spp_delete || false,
           });
         }
       });
@@ -185,6 +226,19 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
     const start = end - max;
 
     return payment.slice(start, end);
+  };
+
+  const yesHandle = () => {
+    setIsOpen(false);
+    const newDeleteSpp = [
+      ...deleteSpp,
+      {
+        delete: true,
+        spp_santri_uuid: current?.spp_santri_uuid || "",
+      },
+    ];
+    setDeleteSpp(newDeleteSpp);
+    setCurrent(null);
   };
 
   return (
@@ -283,14 +337,19 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
                     <input
                       id={`checkbox-${value.spp_uuid}`}
                       type="checkbox"
-                      disabled={disabledHandle(value)}
-                      checked={value.spp_santri_uuid !== ""}
+                      checked={isCecked(value)}
                       onChange={(e) =>
-                        handleCheckboxChange(
-                          item.santri_uuid,
-                          value.spp_uuid,
-                          e.target.checked
-                        )
+                        disabledHandle(value)
+                          ? handleCheckboxChange(
+                              item.santri_uuid,
+                              value.spp_uuid,
+                              e.target.checked
+                            )
+                          : handleCheckbox(
+                              item.santri_uuid,
+                              value,
+                              e.target.checked
+                            )
                       }
                     />
                     <label
@@ -357,6 +416,13 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
             </span>
           </button>
         </div>
+        <Modal
+          message="Apakah andah yakin ingin merubah data ini ?"
+          danger={true}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onYes={yesHandle}
+        />
       </div>
     </>
   );

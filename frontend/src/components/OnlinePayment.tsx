@@ -13,7 +13,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [satusCode, setStatusCode] = useState<number>(0);
+  const [statusCode, setStatusCode] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
   };
 
   const closeHandle = () => {
-    if (satusCode === 200) {
+    if (statusCode === 200) {
       setFile(null);
       setOpen(false);
       setIsOpen();
@@ -131,7 +131,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
         isOpen={open}
         message={message}
         onClose={closeHandle}
-        danger={satusCode !== 200}
+        danger={statusCode !== 200}
       />
     </div>
   );
