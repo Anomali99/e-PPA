@@ -9,6 +9,7 @@ import TagihanPrint from "./TagihanPrint";
 import Pagination from "./Pagination";
 import SantriPrint from "./SantriPrint";
 import PaymentSantriPrint from "./PaymentSantriPrint";
+import MonthPagination from "./MonthPagination";
 
 export {
   Modal,
@@ -22,4 +23,5 @@ export {
   Pagination,
   SantriPrint,
   PaymentSantriPrint,
+  MonthPagination,
 };

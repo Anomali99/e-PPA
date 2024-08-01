@@ -83,7 +83,7 @@ const Modal: React.FC<ParamsType> = ({
               }`}
               onClick={onYes}
             >
-              "Oke"
+              Oke
             </button>
           ) : (
             ""

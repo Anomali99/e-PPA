@@ -39,7 +39,6 @@ const PaymentSantriPrint = React.forwardRef<HTMLDivElement, PropsType>(
 
     const getYearUniqe = (): Record<string, number> => {
       if (santri.length > 0) {
-        console.log(santri.length);
         const spp = santri[0].spp;
         return spp.reduce((acc, item) => {
           if (!acc[item.year]) {

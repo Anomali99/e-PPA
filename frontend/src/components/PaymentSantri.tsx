@@ -4,6 +4,7 @@ import Pagination from "./Pagination";
 import { useReactToPrint } from "react-to-print";
 import PaymentSantriPrint from "./PaymentSantriPrint";
 import Modal from "./Modal";
+import MonthPagination from "./MonthPagination";
 
 type SppType = {
   spp_uuid: string;
@@ -248,69 +249,13 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
         data={payment}
         santri={props.santri}
       />
-      <div className="w-full flex flex-row gap-4 justify-between md:justify-end items-center mb-4">
-        <div className="flex flex-col md:flex-row gap-x-4 gap-y-1.5 items-center">
-          <h1 className="text-xs md:text-normal font-bold ">Triwulan: </h1>
-          <div className="flex flex-row gap-4">
-            <button
-              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
-                month === 1
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-300 hover:bg-gray-400"
-              }`}
-              onClick={() => setMonth(1)}
-            >
-              1
-            </button>
-            <button
-              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
-                month === 2
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-300 hover:bg-gray-400"
-              }`}
-              onClick={() => setMonth(2)}
-            >
-              2
-            </button>
-            <button
-              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
-                month === 3
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-300 hover:bg-gray-400"
-              }`}
-              onClick={() => setMonth(3)}
-            >
-              3
-            </button>
-            <button
-              className={`text-xs md:text-normal px-3 py-2 md:px-4 md:py-2 text-white font-bold rounded-lg ${
-                month === 4
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-300 hover:bg-gray-400"
-              }`}
-              onClick={() => setMonth(4)}
-            >
-              4
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row gap-x-4 gap-y-1.5 items-center">
-          <h1 className="text-xs md:text-normal font-bold text-right">
-            Tahun:{" "}
-          </h1>
-          <select
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            className="text-xs md:text-normal bg-gray-50 border border-gray-300 text-gray-900 md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-max p-1 md:p-2.5"
-          >
-            {Object.keys(getYearUniqe()).map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <MonthPagination
+        month={month}
+        setMonth={setMonth}
+        year={year}
+        setYear={setYear}
+        getYearUniqe={getYearUniqe}
+      />
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-[8px] md:text-xs text-gray-700 uppercase bg-gray-200">
@@ -355,17 +300,20 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
                     <input
                       id={`checkbox-${value.spp_uuid}`}
                       type="checkbox"
+                      disabled={
+                        accessLevel === "1" ? false : disabledHandle(value)
+                      }
                       checked={isCecked(value)}
                       onChange={(e) =>
                         disabledHandle(value)
-                          ? handleCheckboxChange(
-                              item.santri_uuid,
-                              value.spp_uuid,
-                              e.target.checked
-                            )
-                          : handleCheckbox(
+                          ? handleCheckbox(
                               item.santri_uuid,
                               value,
+                              e.target.checked
+                            )
+                          : handleCheckboxChange(
+                              item.santri_uuid,
+                              value.spp_uuid,
                               e.target.checked
                             )
                       }

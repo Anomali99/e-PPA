@@ -15,31 +15,63 @@ type UploadType = {
 const UploadPage: React.FC = () => {
   const [data, setData] = useState<UploadType[]>([]);
   const [current, setCurrent] = useState<UploadType | null>(null);
+  const [date, setDate] = useState<string>("");
 
   useEffect(() => {
     const getData = async () => {
       const res = await getUploadImage();
-      setData(res.data || []);
+      const value = res.data || [];
+      setData(value);
+      if (value.length !== 0) {
+        const dateString = value[value.length - 1].datetime;
+        const [day, month, year] = dateString.split("-");
+        setDate(`${year}-${month}-${day}`);
+      }
     };
 
     getData();
+    console.log(date);
   }, []);
+
+  const filterData = (): UploadType[] => {
+    return data.filter((item) => {
+      const dateString = item.datetime;
+      const [day, month, year] = dateString.split("-");
+      return `${year}-${month}-${day}` === date;
+    });
+  };
 
   return (
     <div className="w-full p-6">
-      <h1 className="text-sm md:text-xl font-bold flex flex-row gap-4 items-center mb-4">
-        <a href="/dashboard">
-          <svg
-            className="size-5 md:size-10 hover:scale-110 hover:text-blue-600"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 -960 960 960"
-            fill="currentColor"
+      <div className="w-full flex flex-row justify-between mb-4 items-center">
+        <h1 className="text-sm md:text-xl font-bold flex flex-row gap-4 items-center">
+          <a href="/dashboard">
+            <svg
+              className="size-5 md:size-10 hover:scale-110 hover:text-blue-600"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="currentColor"
+            >
+              <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
+          </a>
+          <span>Bukti Transfer</span>
+        </h1>
+        <div className="flex items-center gap-4">
+          <label
+            htmlFor="tgl"
+            className="mb-2 text-md font-medium text-gray-900"
           >
-            <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-          </svg>
-        </a>
-        <span>Bukti Transfer</span>
-      </h1>
+            Tanggal:{" "}
+          </label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+          />
+        </div>
+      </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-[8px] md:text-xs text-gray-700 uppercase bg-gray-200">
@@ -89,7 +121,7 @@ const UploadPage: React.FC = () => {
             </tr>
           </thead>
           <tbody className="text-[8px] text-nowrap md:text-wrap md:text-xs">
-            {data.map((item, index) => (
+            {filterData().map((item, index) => (
               <tr
                 key={index}
                 onClick={() => setCurrent(item)}
