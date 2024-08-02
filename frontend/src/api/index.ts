@@ -131,6 +131,7 @@ type PaymentAddType = {
   year: string;
   nominal_spp: number;
   nominal_kosma: number;
+  spp_uuid?: string;
 };
 
 type SppSantriType = {
@@ -296,6 +297,21 @@ const addSppPayment = async (
   }
 };
 
+const updateSppPayment = async (
+  data: PaymentAddType
+): Promise<CheckTokenResponseType> => {
+  const spp_endpoint = "/spp/";
+  try {
+    const res: AxiosResponse<CheckTokenResponseType> = await apiClient.put(
+      spp_endpoint,
+      data
+    );
+    return res.data;
+  } catch (error) {
+    return error as CheckTokenResponseType;
+  }
+};
+
 const addSppSantri = async (
   data: SppSantriType[]
 ): Promise<CheckTokenResponseType> => {
@@ -409,6 +425,42 @@ const getUploadImage = async (): Promise<UploadResponseType> => {
   }
 };
 
+const deleteSpp = async (uuid: string): Promise<CheckTokenResponseType> => {
+  const enpoint = `/spp/?uuid=${uuid}`;
+  try {
+    const res: AxiosResponse<CheckTokenResponseType> = await apiClient.delete(
+      enpoint
+    );
+    return res.data;
+  } catch (error) {
+    return error as CheckTokenResponseType;
+  }
+};
+
+const deleteSantri = async (uuid: string): Promise<CheckTokenResponseType> => {
+  const enpoint = `/santri/?uuid=${uuid}`;
+  try {
+    const res: AxiosResponse<CheckTokenResponseType> = await apiClient.delete(
+      enpoint
+    );
+    return res.data;
+  } catch (error) {
+    return error as CheckTokenResponseType;
+  }
+};
+
+const deleteSchool = async (uuid: string): Promise<CheckTokenResponseType> => {
+  const enpoint = `/santri/school?uuid=${uuid}`;
+  try {
+    const res: AxiosResponse<CheckTokenResponseType> = await apiClient.delete(
+      enpoint
+    );
+    return res.data;
+  } catch (error) {
+    return error as CheckTokenResponseType;
+  }
+};
+
 export {
   login,
   checkToken,
@@ -422,8 +474,12 @@ export {
   updateSantri,
   getPayment,
   addSppPayment,
+  updateSppPayment,
   addSppSantri,
   uploadImage,
   getUploadImage,
+  deleteSpp,
+  deleteSantri,
+  deleteSchool,
   API_BASE_URL,
 };

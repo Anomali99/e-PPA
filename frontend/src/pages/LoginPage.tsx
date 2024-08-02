@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../router/middleware";
 import { login } from "../api";
 import { Modal } from "../components";
+import { pondok } from "../assets";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -42,7 +43,10 @@ const LoginPage: React.FC = () => {
   return (
     <div className="w-screen h-screen bg-gray-200 flex justify-center items-center">
       <div className="flex w-full md:w-1/2 h-max md:bg-white rounded-lg md:shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-        <div className="hidden lg:block lg:w-1/2 bg-cover bg-[url(https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80)]"></div>
+        <div
+          className="hidden lg:block lg:w-1/2 bg-cover bg-center"
+          style={{ backgroundImage: `url(${pondok})` }}
+        ></div>
         <form onSubmit={loginHandle} className="w-full p-8 lg:w-1/2">
           <img
             src="/icon_app.png"

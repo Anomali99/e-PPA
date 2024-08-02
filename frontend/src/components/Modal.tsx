@@ -4,7 +4,7 @@ type ParamsType = {
   isOpen: boolean;
   message: string;
   onClose: () => void;
-  onYes?: () => void | null;
+  onYes?: (() => void | Promise<void>) | null;
   danger?: boolean;
 };
 
