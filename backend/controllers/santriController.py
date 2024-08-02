@@ -2,7 +2,7 @@ from flask import request
 from models import Session, Santri, School, Spp, SppSantri, Upload
 from typing import List, Any, Dict, Optional, Tuple
 from controllers import response
-import json
+import json, os, config
 
 
 def _school_parse_json(data:Optional[List[School]]) -> List[Dict[str, str]]:
@@ -303,6 +303,7 @@ def deleteSantri():
             for spp in spp_santri:
                 session.delete(spp)
             for upload in uploads:
+                os.remove(os.path.join(config.basedir, 'static', upload.filename))
                 session.delete(upload)
             session.delete(santri)
             session.commit()
@@ -339,6 +340,7 @@ def deleteSchool():
                 for spp in spp_santri:
                     session.delete(spp)
                 for upload in uploads:
+                    os.remove(os.path.join(config.basedir, 'static', upload.filename))
                     session.delete(upload)
             for value in santri:
                 session.delete(value)
