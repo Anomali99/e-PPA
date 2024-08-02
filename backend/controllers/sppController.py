@@ -312,3 +312,32 @@ def deleteSpp():
         return response(status_code=500, message=f'Internal server error: {str(e)}')
     finally:
         session.close()
+
+
+def updateSpp():
+    session = Session()
+    try:
+        data:Dict[str,Any] = json.loads(request.get_data())
+        spp_uuid:str = data.get('spp_uuid') if data else None
+        month:str = data.get('month') if data else None
+        year:str = data.get('year') if data else None
+        nominal_spp:int = int(data.get('nominal_spp')) if data else None
+        nominal_kosma:int = int(data.get('nominal_kosma')) if data else None
+        if month and year and nominal_spp and nominal_kosma and spp_uuid:
+            exists = session.query(Spp).filter(Spp.spp_uuid==spp_uuid).first()
+            if exists:
+                exists.month = month
+                exists.year = year
+                exists.nominal_spp = nominal_spp
+                exists.nominal_kosma = nominal_kosma
+                session.merge(exists)
+                session.commit()
+                return response(status_code=200, message='add spp success')
+            else:
+                return response(status_code=401, message='data not found')
+        else:
+            return response(status_code=400, message='requires month, year, spp_uuid and nominal')
+    except Exception as e:
+        return response(status_code=500, message=f'Internal server error: {str(e)}')
+    finally:
+        session.close()
