@@ -141,11 +141,11 @@ def getSppAll():
         session.close()
 
 
-def _get_santri_payment(spp_santri:Optional[List[SppSantri]],spp_id:str,santri_id:str) -> Optional[str]:
+def _get_santri_payment(spp_santri:Optional[List[SppSantri]],spp_id:str,santri_id:str) -> Optional[SppSantri]:
     if(spp_santri):
         for value in spp_santri:
             if value.spp_id == spp_id and value.santri_id == santri_id:
-                return value.spp_santri_uuid
+                return value
     return None
 
 
@@ -165,7 +165,8 @@ def _get_spp_payments(spp:Optional[List[Spp]],spp_santri:Optional[List[SppSantri
                 "year": value.year,
                 "month": value.month,
                 "total": count,
-                "spp_santri_uuid": santri_payment if santri_payment else ''
+                "spp_santri_uuid": santri_payment.spp_santri_uuid if santri_payment else '',
+                "date": santri_payment.datetime.strftime("%d %b %Y") if santri_payment else '-',
             })
         return result, total
     else:
