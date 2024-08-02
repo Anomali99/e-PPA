@@ -4,6 +4,7 @@ import DataPage from "./DataPage";
 import PaymentPage from "./PaymentPage";
 import SearchPage from "./SearchPage";
 import UploadPage from "./UploadPage";
+import NotFoundPage from "./NotFoundPage";
 
 export {
   LoginPage,
@@ -12,4 +13,5 @@ export {
   PaymentPage,
   SearchPage,
   UploadPage,
+  NotFoundPage,
 };

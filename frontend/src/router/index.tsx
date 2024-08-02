@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider, ProtectedRoute } from "./middleware";
 import {
   LoginPage,
   DashboardPage,
@@ -7,8 +8,8 @@ import {
   PaymentPage,
   SearchPage,
   UploadPage,
+  NotFoundPage,
 } from "../pages";
-import { AuthProvider, ProtectedRoute } from "./middleware";
 
 const Router: React.FC = () => {
   return (
@@ -71,6 +72,7 @@ const Router: React.FC = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
   );

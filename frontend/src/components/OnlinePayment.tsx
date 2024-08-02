@@ -15,6 +15,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [statusCode, setStatusCode] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
+  const norek = import.meta.env.VITE_NOREK;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -94,13 +95,20 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
             ""
           )}
           <div className="w-full max-w-screen-lg p-4">
-            <p className="w-full max-w-screen-sm text-xs md:text-base bg-slate-400 rounded-lg p-2 sm:p-4 mb-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-              possimus, unde in inventore consequuntur fugit aspernatur
-              molestias ipsam distinctio tenetur consectetur! Eligendi,
-              aspernatur consequatur, excepturi perspiciatis quia adipisci
-              dolores incidunt tempora tenetur in a vel dicta laboriosam facere
-              voluptates esse?
+            <p className="w-full flex flex-col gap-2 max-w-screen-sm text-xs md:text-base bg-slate-400 rounded-lg p-2 sm:p-4 mb-4">
+              <span>
+                Anda dapat melakukan pembayaran secara online dengan mentransfer
+                ke nomor rekening berikut:
+              </span>
+              <span>
+                <strong>{norek}</strong>
+              </span>
+              <span>
+                Setelah melakukan transfer, harap kirimkan bukti transfer, baik
+                dalam bentuk foto maupun screenshot, melalui formulir yang telah
+                kami sediakan.
+              </span>
+              <span>Terima kasih atas kerjasamanya!</span>
             </p>
             <form className="space-y-4 md:space-y-6" onSubmit={submitHandler}>
               <div>
