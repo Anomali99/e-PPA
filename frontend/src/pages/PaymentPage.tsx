@@ -13,6 +13,7 @@ type PaymentSantriType = {
     month: string;
     total: number;
     spp_santri_uuid: string;
+    date: string;
   }[];
 };
 

@@ -12,6 +12,7 @@ type SppType = {
   month: string;
   total: number;
   spp_santri_uuid: string;
+  date: string;
   santri_uuid?: string;
 };
 
@@ -56,6 +57,7 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
   const [deleteSpp, setDeleteSpp] = useState<DeleteSpp[]>([]);
   const [current, setCurrent] = useState<SppType | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [nominal, setNominal] = useState<boolean>(true);
   const [maxPage, setMaxPage] = useState<number>(1);
   const [month, setMonth] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
@@ -254,6 +256,8 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
         setMonth={setMonth}
         year={year}
         setYear={setYear}
+        nominal={nominal}
+        setNominal={setNominal}
         getYearUniqe={getYearUniqe}
       />
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -322,10 +326,12 @@ const PaymentPutra: React.FC<PropsType> = (props) => {
                       htmlFor={`checkbox-${value.spp_uuid}`}
                       className="ml-1"
                     >
-                      {value.total.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
+                      {nominal
+                        ? value.total.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          })
+                        : value.date}
                     </label>
                   </td>
                 ))}
