@@ -1,8 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { getAllSchool, getSantriByGender } from "../api";
-import { DataModal, DataTable, Pagination, SantriPrint } from "../components";
+import {
+  getAllSchool,
+  getSantriByGender,
+  deleteSantri,
+  deleteSchool,
+} from "../api";
+import {
+  DataModal,
+  DataTable,
+  Modal,
+  Pagination,
+  SantriPrint,
+} from "../components";
 
 type SchoolType = {
   name: string;
@@ -38,6 +49,7 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
   const [santri, setSantri] = useState<SantriType[]>([]);
   const [current, setCurrent] = useState<DataType>({ uuid: "", name: "" });
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [accessLevel, setAccessLevel] = useState<string>("");
   const [maxPage, setMaxPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
@@ -99,6 +111,15 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
 
   const modalHandle = () => setIsOpen(!isOpen);
 
+  const yesHandel = async () => {
+    if (content === 3) {
+      await deleteSchool(current.uuid);
+    } else {
+      await deleteSantri(current.uuid);
+    }
+    window.location.reload();
+  };
+
   return (
     <div className="w-full h-full p-4 flex justify-center flex-col gap-3 md:gap-6">
       {content !== 3 ? (
@@ -142,6 +163,26 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
       <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-2">
         <Pagination page={page} max={maxPage} setCurrent={setPage} />
         <div className="w-full flex justify-end">
+          {accessLevel === "1" && current.uuid !== "" ? (
+            <button
+              className="relative h-max inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-600 to-yellow-500 group-hover:from-red-600 group-hover:to-yellow-500 hover:text-white focus:outline-none"
+              onClick={() => setModalOpen(true)}
+            >
+              <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                <svg
+                  className="size-4 md:size-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 -960 960 960"
+                  fill="currentColor"
+                >
+                  <path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z" />
+                </svg>
+                Hapus
+              </span>
+            </button>
+          ) : (
+            ""
+          )}
           {["1", "2", "3"].includes(accessLevel) ? (
             <button
               className="relative h-max inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs md:text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:outline-none"
@@ -200,6 +241,14 @@ const DataPage: React.FC<{ content: number }> = ({ content }) => {
         data={current}
         isSantri={content !== 3}
         allSchool={school}
+      />
+
+      <Modal
+        message="apakah anda yakin ingin menhapus data ini ? data akan dihapus besarta seluruh relasinya. seperti santri dan relasinya."
+        isOpen={modalOpen}
+        danger={true}
+        onClose={() => setModalOpen(false)}
+        onYes={yesHandel}
       />
     </div>
   );
