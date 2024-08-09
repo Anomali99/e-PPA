@@ -18,11 +18,17 @@ type TagihanType = {
 
 type PropsType = {
   isOpen: boolean;
+  yatim: boolean;
   data: TagihanType | null;
   setIsOpen: () => void;
 };
 
-const ViewDeatils: React.FC<PropsType> = ({ isOpen, data, setIsOpen }) => {
+const ViewDeatils: React.FC<PropsType> = ({
+  isOpen,
+  data,
+  yatim,
+  setIsOpen,
+}) => {
   if (!isOpen) return null;
 
   const [tagihan, setTagihan] = useState<number>(0);
@@ -94,6 +100,13 @@ const ViewDeatils: React.FC<PropsType> = ({ isOpen, data, setIsOpen }) => {
                 <th scope="col" className="px-6 py-3 w-full">
                   Nominal Kosma
                 </th>
+                {yatim ? (
+                  <th scope="col" className="px-6 py-3 w-full">
+                    Diskon
+                  </th>
+                ) : (
+                  ""
+                )}
                 <th scope="col" className="px-6 py-3 w-full">
                   subtotal
                 </th>
@@ -124,6 +137,11 @@ const ViewDeatils: React.FC<PropsType> = ({ isOpen, data, setIsOpen }) => {
                       currency: "IDR",
                     })}
                   </td>
+                  {yatim ? (
+                    <td className="px-6 py-4 w-full">- Rp. 100.000,-</td>
+                  ) : (
+                    ""
+                  )}
                   <td className="px-6 py-4 w-full">
                     {item.total.toLocaleString("id-ID", {
                       style: "currency",

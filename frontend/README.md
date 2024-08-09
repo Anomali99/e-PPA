@@ -26,6 +26,7 @@ cd frontend
 ```
 VITE_BASE_API_URL=http://localhost:5127
 VITE_NOREK=123456789012
+VITE_NOWA=0856xxxxxxxx
 ```
 
 ### 2. Install Dependencies

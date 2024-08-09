@@ -16,6 +16,7 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
   const [statusCode, setStatusCode] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
   const norek = import.meta.env.VITE_NOREK;
+  const nowa = import.meta.env.VITE_NOWA;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -107,6 +108,13 @@ const OnlinePayment: React.FC<PropsType> = ({ uuid, isOpen, setIsOpen }) => {
                 Setelah melakukan transfer, harap kirimkan bukti transfer, baik
                 dalam bentuk foto maupun screenshot, melalui formulir yang telah
                 kami sediakan.
+              </span>
+              <span>
+                Setelah mengirim bukti tranfer, harap melakukan konfirmasi
+                terakhir dengan menghubungi nomor berikut:
+              </span>
+              <span>
+                <strong>{nowa}</strong>
               </span>
               <span>Terima kasih atas kerjasamanya!</span>
             </p>

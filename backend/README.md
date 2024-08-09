@@ -88,5 +88,5 @@ npm install -g pm2@latest
 ### 7. Deploy
 
 ```ps
-pm2 start app.py --name e-PPA --interpreter=python3 -- --port 5127
+pm2 start app.py --name e-PPA --interpreter=python3
 ```

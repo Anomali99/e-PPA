@@ -209,6 +209,7 @@ const SearchPage: React.FC = () => {
             <ViewDeatils
               isOpen={viewDetails}
               data={tagihan}
+              yatim={santri?.yatim || false}
               setIsOpen={viewDetailsHandle}
             />
             <OnlinePayment
